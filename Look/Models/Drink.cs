@@ -4,6 +4,7 @@ namespace Look.Models
 {
     public class Drink
     {
+
         [Key]
         public int DrinkId { get; set; }
         public string? DrinkName { get; set; }
