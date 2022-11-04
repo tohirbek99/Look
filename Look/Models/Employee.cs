@@ -12,7 +12,6 @@ namespace Look.Models
         public int OrderId { get; set; }
         public virtual Order? Orders { get; set; }
 
-        public ICollection<FastFood>? FastFoods { get; set; }
-        public ICollection<Drink>? Drinks { get; set; }
+        public ICollection<Category>? Categories { get; set; }
     }
 }

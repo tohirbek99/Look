@@ -1,11 +1,12 @@
 ﻿using System;
+using Look.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Look.Migrations
 {
-    public partial class CreateInatial : Migration
+    public partial class CreateOnDelet : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,7 +33,7 @@ namespace Look.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CostemerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNamber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: true)
+                    OrderId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,7 +42,8 @@ namespace Look.Migrations
                         name: "FK_Costomers_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "OrderId");
+                        principalColumn: "OrderId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,51 +64,57 @@ namespace Look.Migrations
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Drinks",
+                name: "Categories",
                 columns: table => new
                 {
-                    DrinkId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DrinkName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Volume = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmploeeId = table.Column<int>(type: "int", nullable: false),
-                    EmployeesEmployeeId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Drinks", x => x.DrinkId);
-                    table.ForeignKey(
-                        name: "FK_Drinks_Employees_EmployeesEmployeeId",
-                        column: x => x.EmployeesEmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FastFoods",
-                columns: table => new
-                {
-                    FoodId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FoodName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmploeeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FastFoods", x => x.FoodId);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                     table.ForeignKey(
-                        name: "FK_FastFoods_Employees_EmploeeId",
+                        name: "FK_Categories_Employees_EmploeeId",
                         column: x => x.EmploeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.ProductId);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_EmploeeId",
+                table: "Categories",
+                column: "EmploeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Costomers_OrderId",
@@ -114,19 +122,14 @@ namespace Look.Migrations
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drinks_EmployeesEmployeeId",
-                table: "Drinks",
-                column: "EmployeesEmployeeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Employees_OrderId",
                 table: "Employees",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FastFoods_EmploeeId",
-                table: "FastFoods",
-                column: "EmploeeId");
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -135,10 +138,10 @@ namespace Look.Migrations
                 name: "Costomers");
 
             migrationBuilder.DropTable(
-                name: "Drinks");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "FastFoods");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Employees");

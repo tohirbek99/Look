@@ -13,21 +13,21 @@ namespace Look.DBContexts
 
         }
         public DbSet<Costomer> Costomers { get; set; }
-        public DbSet<Drink> Drinks { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<FastFood> FastFoods { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FastFood>()
-                .HasOne(e => e.Employees)
-                .WithMany(c => c.FastFoods)
-                .HasForeignKey(e => e.EmploeeId);
+            modelBuilder.Entity<Product>()
+                .HasOne(e => e.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(e => e.CategoryId);
 
-            modelBuilder.Entity<Drink>()
+            modelBuilder.Entity<Category>()
                 .HasOne(e=>e.Employees)
-                .WithMany(d=>d.Drinks)
+                .WithMany(d=>d.Categories)
                 .HasForeignKey(e => e.EmploeeId);
             
             modelBuilder.Entity<Employee>()

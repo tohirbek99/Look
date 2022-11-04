@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Look.Migrations
 {
     [DbContext(typeof(DBConnection))]
-    [Migration("20221026061316_CreateModel")]
-    partial class CreateModel
+    [Migration("20221028052157_CreateOnDelet")]
+    partial class CreateOnDelet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,30 @@ namespace Look.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Look.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmploeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("EmploeeId");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("Look.Models.Costomer", b =>
                 {
@@ -46,33 +70,6 @@ namespace Look.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("Costomers");
-                });
-
-            modelBuilder.Entity("Look.Models.Drink", b =>
-                {
-                    b.Property<int>("DrinkId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DrinkId"), 1L, 1);
-
-                    b.Property<string>("DrinkName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EmploeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Volume")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DrinkId");
-
-                    b.HasIndex("EmploeeId");
-
-                    b.ToTable("Drinks");
                 });
 
             modelBuilder.Entity("Look.Models.Employee", b =>
@@ -99,30 +96,6 @@ namespace Look.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Look.Models.FastFood", b =>
-                {
-                    b.Property<int>("FoodId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FoodId"), 1L, 1);
-
-                    b.Property<int>("EmploeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FoodName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Price")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("FoodId");
-
-                    b.HasIndex("EmploeeId");
-
-                    b.ToTable("FastFoods");
-                });
-
             modelBuilder.Entity("Look.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -145,6 +118,50 @@ namespace Look.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("Look.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(8,2)");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Look.Models.Category", b =>
+                {
+                    b.HasOne("Look.Models.Employee", "Employees")
+                        .WithMany("Categories")
+                        .HasForeignKey("EmploeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employees");
+                });
+
             modelBuilder.Entity("Look.Models.Costomer", b =>
                 {
                     b.HasOne("Look.Models.Order", "Orders")
@@ -154,17 +171,6 @@ namespace Look.Migrations
                         .IsRequired();
 
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Look.Models.Drink", b =>
-                {
-                    b.HasOne("Look.Models.Employee", "Employees")
-                        .WithMany("Drinks")
-                        .HasForeignKey("EmploeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Look.Models.Employee", b =>
@@ -178,22 +184,25 @@ namespace Look.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Look.Models.FastFood", b =>
+            modelBuilder.Entity("Look.Models.Product", b =>
                 {
-                    b.HasOne("Look.Models.Employee", "Employees")
-                        .WithMany("FastFoods")
-                        .HasForeignKey("EmploeeId")
+                    b.HasOne("Look.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employees");
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Look.Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Look.Models.Employee", b =>
                 {
-                    b.Navigation("Drinks");
-
-                    b.Navigation("FastFoods");
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("Look.Models.Order", b =>
