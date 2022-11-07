@@ -2,11 +2,11 @@
 
     <ul class="list-group">
         <li class="list-group-item">
-            <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">All Product</a>
+        <a class="nav-link text-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="">All Product</a>
         </li>
         @foreach(var item in Model){
             <li class="list-group-item">
-                <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">@item.CategoryName</a>
+            <a class="nav-link text-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.CategoryName</a>
             </li>
         }
     </ul>

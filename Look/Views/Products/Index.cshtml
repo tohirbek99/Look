@@ -2,112 +2,41 @@
 @model IEnumerable<Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
 
-    Pager pager = new Pager();
-    int PageNo = 0;
-    if (ViewBag.Pager != null)
-    {
-        pager = ViewBag.Pager;
-        PageNo = pager.CurrentPage;
-
-    }
 }
 
-<h1>Index</h1>
+<h1>Products</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Slug)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Image)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.CategoryId)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<div class="container">
-    @if (pager.TotalPage > 0)
+<div class="row">
+    @foreach (var item in Model)
     {
-        <ul class="pagination justify-content-end">
+        <div class="col-4">
+            <img src="/images/image/@item.Image" class="img-fluid" width="200" height="200" />
 
-            @if (pager.CurrentPage > 1)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-pg="1"><i class="bi bi-chevron-double-left"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-pg="@(pager.CurrentPage-1)"><i class="bi bi-chevron-left"></i></a>
-                </li>
-            }
+            <h4>@item.ProductName</h4>
 
-            @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
-            {
-                <li class="page-item @(pge==pager.CurrentPage ? "active":"")">
-                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-pg="@pge">@pge</a>
-                </li>
-            } 
+            <div>
+                @Html.Raw(item.Description)
+            </div>
 
-            @if(pager.CurrentPage<pager.TotalPage)
-            {
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-pg="@(pager.CurrentPage+1)"><i class="bi bi-chevron-right"></i></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-pg="@(pager.TotalPage)"><i class="bi bi-chevron-double-right"></i></a>
-                </li>
-            }
-            
-           
-        </ul>
+            <p>
+                @item.Price.ToString("C2")
+            </p>
 
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+
+        </div>
     }
 </div>
+@if (ViewBag.TotalPage > 1)
+{
+    <div class="d-flex w-100 justify-content-end ">
+        <pagination page-count="@ViewBag.TotalPage"
+                page-target="/Products/@ViewBag.CategorySlug"
+                page-number="@ViewBag.PageNumber"
+                page-range="@ViewBag.PageRange">
+
+        </pagination>
+    </div>
+}

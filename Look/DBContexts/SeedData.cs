@@ -26,7 +26,7 @@ namespace Look.DBContexts
                             Description = "Gig burger",
                             Price = 1.50M,
                             Category = foods,
-                            Image = "burgers.jpg"
+                            Image = "burgers.jp"
                         },
                         new Product
                         {
@@ -35,7 +35,7 @@ namespace Look.DBContexts
                             Price = 2M,
                             Description= "box master kfc",
                             Category = foods,
-                            Image = "kfc.jpg"
+                            Image = "kfc.jp"
                         },
                         new Product
                         {
@@ -44,7 +44,7 @@ namespace Look.DBContexts
                             Description= "pizza dominos",
                             Price = 0.50M,
                             Category = foods,
-                            Image = "pizza.jpg"
+                            Image = "pizza.jp"
                         },
                         new Product
                         {
@@ -62,7 +62,7 @@ namespace Look.DBContexts
                             Description= "Fre 300g",
                             Price = 2.50M,
                             Category = foods,
-                            Image = "free.jpg"
+                            Image = "free.jp"
                         },
                         new Product
                         {
@@ -71,7 +71,7 @@ namespace Look.DBContexts
                             Description= "Coco-cola 05L",
                             Price = 5.99M,
                             Category = drinks,
-                            Image = "cola05.jpg"
+                            Image = "cola05.jp"
                         },
                         new Product
                         {
@@ -80,7 +80,7 @@ namespace Look.DBContexts
                             Description= "Coco-cola 025L",
                             Price = 5.99M,
                             Category = drinks,
-                            Image = "cola250.jpg"
+                            Image = "cola250.jp"
                         },
                         new Product
                         {
@@ -89,7 +89,7 @@ namespace Look.DBContexts
                             Description= "Coco-cola 1.5L",
                             Price = 5.99M,
                             Category = drinks,
-                            Image = "cola1.5.jpg"
+                            Image = "cola1.5.jp"
                         },
                         new Product
                         {
@@ -98,7 +98,7 @@ namespace Look.DBContexts
                             Description = "Apple Juicy mojito",
                             Price = 7.99M,
                             Category = drinks,
-                            Image = "mojitos.jpg"
+                            Image = "mojitos.jp"
                         },
                         new Product
                         {
@@ -107,7 +107,7 @@ namespace Look.DBContexts
                             Description= "MacCofe Gold",
                             Price = 9.99M,
                             Category = drinks,
-                            Image = "cofee.jpg"
+                            Image = "cofee.jp"
                         },
                         new Product
                         {
@@ -116,7 +116,7 @@ namespace Look.DBContexts
                             Description="Tropic Juicy bananas",
                             Price = 11.99M,
                             Category = drinks,
-                            Image = "tropic.jpg"
+                            Image = "tropic.jp"
                         }
                 );
 
