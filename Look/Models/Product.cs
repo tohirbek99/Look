@@ -11,10 +11,10 @@ namespace Look.Models
         [Required(ErrorMessage = "Please enter a value")]
         public string? ProductName { get; set; }
 
-        public string Slug { get; set; }
+        public string? Slug { get; set; }
 
         [Required, MinLength(4, ErrorMessage = "Minimum length a 4")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue, ErrorMessage = "Please enter a value")]
@@ -23,6 +23,8 @@ namespace Look.Models
 
         public string? Image { get; set; }
         public int CategoryId { get; set; }
-        public virtual Category? Category { get; set; }
+        public virtual Category Category { get; set; }
+        public ICollection<Order_Details>? Order_Details { get; set; }
+
     }
 }

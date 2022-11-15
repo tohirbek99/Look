@@ -4,6 +4,7 @@ namespace Look.Models
 {
     public class CartItem
     {
+        [Key]
         public int CartId { get; set; }
         public string? CartName { get; set; }
         public int Quantity { get; set; }
@@ -16,6 +17,7 @@ namespace Look.Models
             get { return Quantity * Price; }
         }
         public string Image { get; set; }
+
 
         public CartItem()
         {

@@ -9,9 +9,6 @@ namespace Look.Models
         public string? CategoryName { get; set; }
        public string? Slug { get; set; }
 
-        public int EmploeeId { get; set; }
-        public virtual Employee? Employees { get; set; }
-
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product>? Products { get; set; }
     }
 }

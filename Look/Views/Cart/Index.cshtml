@@ -4,7 +4,7 @@
     ViewData["Title"] = "Cart OverView";
 }
 
-@if(Model.CartItems.Count>0)
+@if (Model.CartItems.Count > 0)
 {
     <table class="table">
         <tr>
@@ -17,29 +17,36 @@
         </tr>
         @foreach (var item in Model.CartItems)
         {
+
             <tr>
+                
                 <td>@item.CartName</td>
                 <td>@item.Description</td>
                 <td>@item.Quantity</td>
-                <td>
-                    <a class="btn btn-primary btn-sm"asp-action="Add"asp-route-id="@item.CartId">+</a>
-                    <a class="btn btn-info btn-sm"asp-action="Decrease"asp-route-id="@item.CartId">-</a>
-                    <a class="btn btn-danger btn-sm"asp-action="Remove"asp-route-id="@item.CartId">Remove</a>
+                <td class ="table-title">
+
+                    <a class="btn btn-danger btn-sm" asp-action="Remove" asp-route-id="@item.CartId">Remove</a>
+                    <a class="btn btn-info btn-sm" asp-action="Decrease" asp-route-id="@item.CartId"><i class="material-icons">&#xE15C;</i></a>
+                    <a class="btn btn-success btn-sm" asp-action="Add" asp-route-id="@item.CartId"><i class="material-icons">&#xE147;</i></a>
+
                 </td>
+
                 <td>@item.Price.ToString("C2")</td>
                 <td>@Model.CartItems.Where(p=>p.CartId==item.CartId).Sum(p=>p.Quantity*p.Price).ToString("C2")</td>
-            </tr> 
-            }
-            <tr>
-                <td class="text-right" colspan="4">Grand Total:@Model.GrandTotal.ToString("C2")</td>
+
             </tr>
-            <tr>
-                <td class="text-right" colspan="4" >
-                    <a class="btn btn-danger"asp-controller="Cart" asp-action="Clear">Clear Cart</a>
-                    <a class="btn btn-primary" asp-controller="Products"asp-action="Index" asp-route-categorySlug="">Checkout</a>
-                </td>
-            </tr>
-       
+
+        }
+        <tr>
+            <td class="text-right" colspan="4">Grand Total:@Model.GrandTotal.ToString("C2")</td>
+        </tr>
+        <tr>
+            <td class="text-right table-title" colspan="4">
+                <a class="btn btn-danger" asp-controller="Cart" asp-action="Clear">Clear Cart</a>
+                <a class="btn btn-primary" asp-controller="Products" asp-action="Index" asp-route-categorySlug="">Checkout</a>
+            </td>
+        </tr>
+
     </table>
 }
 

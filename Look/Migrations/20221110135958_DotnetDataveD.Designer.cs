@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Look.Migrations
 {
     [DbContext(typeof(DBConnection))]
-    [Migration("20221028052157_CreateOnDelet")]
-    partial class CreateOnDelet
+    [Migration("20221110135958_DotnetDataveD")]
+    partial class DotnetDataveD
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,36 @@ namespace Look.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Look.Models.CartItem", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
+
+                    b.Property<string>("CartName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("CartItems");
+                });
 
             modelBuilder.Entity("Look.Models.Category", b =>
                 {
@@ -35,15 +65,10 @@ namespace Look.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmploeeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CategoryId");
-
-                    b.HasIndex("EmploeeId");
 
                     b.ToTable("Categories");
                 });
@@ -56,7 +81,13 @@ namespace Look.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CostomerId"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CostemerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
@@ -83,15 +114,10 @@ namespace Look.Migrations
                     b.Property<string>("EmployeeName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PhoneNamber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("EmployeeId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Employees");
                 });
@@ -104,18 +130,67 @@ namespace Look.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
-                    b.Property<string>("Count")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Freight")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RequiredData")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShipVia")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippedData")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("OrderId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Look.Models.Order_Details", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("DisCount")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitPrice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Orders_Details");
                 });
 
             modelBuilder.Entity("Look.Models.Product", b =>
@@ -133,6 +208,9 @@ namespace Look.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8,2)");
 
@@ -141,7 +219,6 @@ namespace Look.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Slug")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductId");
@@ -149,17 +226,6 @@ namespace Look.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Look.Models.Category", b =>
-                {
-                    b.HasOne("Look.Models.Employee", "Employees")
-                        .WithMany("Categories")
-                        .HasForeignKey("EmploeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Look.Models.Costomer", b =>
@@ -173,15 +239,34 @@ namespace Look.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Look.Models.Employee", b =>
+            modelBuilder.Entity("Look.Models.Order", b =>
                 {
-                    b.HasOne("Look.Models.Order", "Orders")
-                        .WithMany("Employees")
+                    b.HasOne("Look.Models.Employee", "Employee")
+                        .WithMany("Orders")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("Look.Models.Order_Details", b =>
+                {
+                    b.HasOne("Look.Models.Order", "Order")
+                        .WithMany("Order_Details")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Orders");
+                    b.HasOne("Look.Models.Product", "Product")
+                        .WithMany("Order_Details")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Look.Models.Product", b =>
@@ -202,14 +287,19 @@ namespace Look.Migrations
 
             modelBuilder.Entity("Look.Models.Employee", b =>
                 {
-                    b.Navigation("Categories");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Look.Models.Order", b =>
                 {
                     b.Navigation("Costomers");
 
-                    b.Navigation("Employees");
+                    b.Navigation("Order_Details");
+                });
+
+            modelBuilder.Entity("Look.Models.Product", b =>
+                {
+                    b.Navigation("Order_Details");
                 });
 #pragma warning restore 612, 618
         }

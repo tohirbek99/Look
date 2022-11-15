@@ -6,11 +6,17 @@ namespace Look.Models
     {
         [Key]
         public int OrderId { get; set; }
-        public DateTime DateTime { get; set; }
-        public string? Count { get; set; }
+        public DateTime OrderDate { get; set; }
         public string? Location { get; set; }
-       
-        public ICollection<Employee>? Employees { get; set; }
+        public string? ShipVia { get; set; }
+        public string? Freight { get; set; }
+        public string? ShipAddress { get; set; }
+        public string? RequiredData { get; set; }
+        public string? ShippedData { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
+
         public ICollection<Costomer>? Costomers { get; set; }
+        public ICollection<Order_Details>? Order_Details { get; set; }
     }
 }

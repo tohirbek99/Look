@@ -1,12 +1,21 @@
 ﻿@model IEnumerable<Category>
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                <a class="nav-link text-dark btn  dropdown-item" asp-controller="Products" asp-action="Index" asp-route-categorySlug="">All Product</a>
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+                <a class="nav-link text-dark btn  dropdown-item" asp-controller="Products" asp-action="Index" asp-route-categorySlug="">All Product</a>
 
-    <ul class="list-group">
-        <li class="list-group-item">
-        <a class="nav-link text-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="">All Product</a>
-        </li>
-        @foreach(var item in Model){
-            <li class="list-group-item">
-            <a class="nav-link text-dark" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.CategoryName</a>
-            </li>
-        }
-    </ul>
+                @foreach (var item in Model)
+                {
+                        <a class="nav-link text-dark btn dropdown-item" asp-controller="Products" asp-action="Index" asp-route-categorySlug="@item.Slug">@item.CategoryName</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

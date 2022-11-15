@@ -13,11 +13,9 @@ namespace Look.DBContexts
 
             if (!context.Products.Any())
             {
-                Order sherzod=new Order {DateTime=DateTime.Now,Count="1"};
-                Employee tohirbek= new Employee { EmployeeName="Tohirbek",PhoneNamber="+998944006668",Orders=sherzod};
-                Category foods = new Category { CategoryName = "Foods", Slug="foods",Employees=tohirbek };
-                Category drinks = new Category { CategoryName = "Drinks",Slug="drinks" , Employees = tohirbek };
-
+               
+                Category foods = new Category { CategoryName = "Foods", Slug = "foods" };
+                Category drinks = new Category { CategoryName = "Drinks", Slug = "drinks" };
                 context.Products.AddRange(
                         new Product
                         {
@@ -26,7 +24,7 @@ namespace Look.DBContexts
                             Description = "Gig burger",
                             Price = 1.50M,
                             Category = foods,
-                            Image = "burgers.jp"
+                            Image = "burgers.jpg"
                         },
                         new Product
                         {
@@ -35,7 +33,7 @@ namespace Look.DBContexts
                             Price = 2M,
                             Description= "box master kfc",
                             Category = foods,
-                            Image = "kfc.jp"
+                            Image = "kfc.jpg"
                         },
                         new Product
                         {
@@ -44,7 +42,7 @@ namespace Look.DBContexts
                             Description= "pizza dominos",
                             Price = 0.50M,
                             Category = foods,
-                            Image = "pizza.jp"
+                            Image = "pizza.jpg"
                         },
                         new Product
                         {
@@ -62,7 +60,7 @@ namespace Look.DBContexts
                             Description= "Fre 300g",
                             Price = 2.50M,
                             Category = foods,
-                            Image = "free.jp"
+                            Image = "free.jpg"
                         },
                         new Product
                         {
@@ -71,7 +69,7 @@ namespace Look.DBContexts
                             Description= "Coco-cola 05L",
                             Price = 5.99M,
                             Category = drinks,
-                            Image = "cola05.jp"
+                            Image = "cola05.jpg"
                         },
                         new Product
                         {
@@ -80,7 +78,7 @@ namespace Look.DBContexts
                             Description= "Coco-cola 025L",
                             Price = 5.99M,
                             Category = drinks,
-                            Image = "cola250.jp"
+                            Image = "cola250.jpg"
                         },
                         new Product
                         {
@@ -89,7 +87,7 @@ namespace Look.DBContexts
                             Description= "Coco-cola 1.5L",
                             Price = 5.99M,
                             Category = drinks,
-                            Image = "cola1.5.jp"
+                            Image = "cola1.5.jpg"
                         },
                         new Product
                         {
@@ -98,7 +96,7 @@ namespace Look.DBContexts
                             Description = "Apple Juicy mojito",
                             Price = 7.99M,
                             Category = drinks,
-                            Image = "mojitos.jp"
+                            Image = "mojitos.jpg"
                         },
                         new Product
                         {
@@ -107,7 +105,7 @@ namespace Look.DBContexts
                             Description= "MacCofe Gold",
                             Price = 9.99M,
                             Category = drinks,
-                            Image = "cofee.jp"
+                            Image = "cofee.jpg"
                         },
                         new Product
                         {
@@ -116,7 +114,7 @@ namespace Look.DBContexts
                             Description="Tropic Juicy bananas",
                             Price = 11.99M,
                             Category = drinks,
-                            Image = "tropic.jp"
+                            Image = "tropic.jpg"
                         }
                 );
 

@@ -5,38 +5,48 @@
     ViewData["Title"] = "Products";
 
 }
-
-<h1>Products</h1>
-
-<div class="row">
-    @foreach (var item in Model)
-    {
-        <div class="col-4">
-            <img src="/images/image/@item.Image" class="img-fluid" width="200" height="200" />
-
-            <h4>@item.ProductName</h4>
-
-            <div>
-                @Html.Raw(item.Description)
-            </div>
-
-            <p>
-                @item.Price.ToString("C2")
-            </p>
-
-            <a class="btn btn-primary" asp-controller="Cart"asp-action="Add" asp-route-Id="@item.ProductId">Add to Cart</a>
-
-        </div>
-    }
-</div>
-@if (ViewBag.TotalPage > 1)
-{
-    <div class="d-flex w-100 justify-content-end ">
-        <pagination page-count="@ViewBag.TotalPage"
-                page-target="/Products/@ViewBag.CategorySlug"
-                page-number="@ViewBag.PageNumber"
-                page-range="@ViewBag.PageRange">
-
-        </pagination>
+<div class="table-title">
+    <div class="row">
+        <h1>Products</h1>
+       
     </div>
-}
+    </div>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-4">
+                <img src="/images/image/@item.Image" class="img-fluid"  />
+
+                <h4>@item.ProductName</h4>
+
+                <div>
+                    @item.Description
+                </div>
+
+                <p>
+                    @item.Price.ToString("C2")
+                </p>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                    <a class="btn btn-success" asp-controller="Cart" asp-action="Add" asp-route-Id="@item.ProductId"><i class="material-icons">&#xE147;</i> <span>Add to Cart</span></a>
+                        </div>
+
+                </div>
+
+            </div>
+        }
+            @if (ViewBag.TotalPage > 1)
+            {
+                <div class="d-flex w-100 justify-content-end ">
+                    <pagination page-count="@ViewBag.TotalPage"
+                        page-target="/Products/@ViewBag.CategorySlug"
+                        page-number="@ViewBag.PageNumber"
+                        page-range="@ViewBag.PageRange">
+
+                    </pagination>
+                </div>
+            }
+
