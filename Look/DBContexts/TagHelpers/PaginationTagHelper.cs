@@ -129,20 +129,20 @@ namespace Look.DBContexts.TagHelpers
 
             if (string.IsNullOrEmpty(PageFirst))
             {
-                PageFirst = "<<";
+                PageFirst = "<i class=\"bi bi-chevron-double-left\"></i>";
             }
             if (string.IsNullOrEmpty(PagePrevious))
             {
-                PagePrevious = "<";
+                PagePrevious = "<i class=\"bi bi-chevron-left\"></i>";
             }
             if (string.IsNullOrEmpty(PageNext))
             {
-                PageNext = ">";
+                PageNext = "<i class=\"bi bi-chevron-right\"></i>";
             }
 
             if (string.IsNullOrEmpty(PageLast))
             {
-                PageLast = ">>";
+                PageLast = "<i class=\"bi bi-chevron-double-right\"></i>";
             }
         }
     }

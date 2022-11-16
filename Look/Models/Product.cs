@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Look.DBContexts.Validation;
 
 namespace Look.Models
 {
@@ -22,8 +23,14 @@ namespace Look.Models
         public decimal Price { get; set; }
 
         public string? Image { get; set; }
+                
+        [NotMapped]
+        [FileExtention]
+        public IFormFile? ImageUploud { get; set; }
+        
         public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
+        [Required,Range(1, double.MaxValue, ErrorMessage = "Please enter a value")]
+        public virtual Category? Category { get; set; }
         public ICollection<Order_Details>? Order_Details { get; set; }
 
     }
