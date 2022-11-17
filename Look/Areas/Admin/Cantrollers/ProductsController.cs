@@ -1,5 +1,6 @@
 ﻿using Look.DBContexts;
 using Look.Models;
+using Look.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
@@ -42,30 +43,32 @@ namespace Look.Areas.Admin.Cantrollers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(ProductsViewModel product)
         {
-            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.Category);
+            Product _product=new Product();
+            
+            ViewBag.Categories = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             if (ModelState.IsValid)
             {
-                product.Slug = product.ProductName.ToLower().Replace("", "-");
-                var slug = _context.Products.OrderByDescending(p => p.Slug == product.Slug);
+               var SlugName = product.ProductName.ToLower().Replace(" ","_");
+                var slug = _context.Products.FirstOrDefaultAsync(p => p.Slug == SlugName);
                 if (slug != null)
                 {
                     ModelState.AddModelError("", "The product already exists");
                     return View(product);
                 }
 
-                if (product.ImageUploud != null)
+                if (product.ImageUpload != null)
                 {
-                    string uploudsDir = Path.Combine(_webHost.WebRootPath, "/images/image");
-                    string ImageName = Guid.NewGuid().ToString() + "-" + product.ImageUploud;
+                    string uploudsDir = Path.Combine(_webHost.WebRootPath, "images/image");
+                    string ImageName = Guid.NewGuid().ToString()+ "_"+product.ImageUpload;
 
                     string filePath = Path.Combine(uploudsDir, ImageName);
                     FileStream fs = new FileStream(filePath, FileMode.Create);
-                    await product.ImageUploud.CopyToAsync(fs);
+                    await product.ImageUpload.CopyToAsync(fs);
                     fs.Close();
 
-                    product.Image = ImageName;
+                    //product.Image = ImageName;
                 }
 
                 _context.Add(product);

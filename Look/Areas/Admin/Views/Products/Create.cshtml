@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductsViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -38,9 +38,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
-                <input asp-for="ImageUploud" class="form-control" />
-                <img src="" id="imgpreview" class="pt-2" />
-                <span asp-validation-for="ImageUploud" class="text-danger"></span>
+                <input asp-for="ImageUpload" class="form-control" />
+                <img id="imgpreview" class="pt-2" />
+                <span asp-validation-for="ImageUpload" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button class="btn btn-primary">Create</button>
@@ -64,7 +64,7 @@
         CKEDITOR.replace("Description")
 
 
-        $("#ImageUpload").change(function () {
+        $("#ImageUpload").change(function(){
             readURL(this);
         });
     </script>
